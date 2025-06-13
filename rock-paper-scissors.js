@@ -22,6 +22,53 @@ const randomNumber = Math.random();
    
    return computerName;
 }
+
+
+
+document.querySelector('.js-rock-button').addEventListener('click', () =>{
+  playGame('rock');
+});
+document.querySelector('.js-paper-button').addEventListener('click', () =>{
+  playGame('paper');
+});
+document.querySelector('.js-scissors-button').addEventListener('click', () =>{
+  playGame('scissors');
+});
+document.querySelector('.js-reset-button').addEventListener('click', () =>{
+  score.wins = 0;
+  score.losses = 0;
+  score.ties = 0;
+  localStorage.removeItem('stores');
+  showScore();
+  clearInterval(intervalId);
+  autoPlayButton.innerHTML = 'Autoplay'
+});
+
+
+
+const autoPlayButton = document.querySelector('.js-Autoplay-button');
+autoPlayButton.addEventListener('click', () =>{
+  autoPlay();
+});
+let isAutoPlaying = false;
+let intervalId;
+function autoPlay() {
+if (!isAutoPlaying) {
+  intervalId = setInterval(() =>{
+    const playermoves = functionGame();
+    playGame(playermoves)
+    isAutoPlaying = true;
+  autoPlayButton.innerHTML = 'Stop playing';
+  }, 1000)
+} else {
+  clearInterval(intervalId);
+  isAutoPlaying = false;
+  autoPlayButton.innerHTML = 'Autoplay';
+}
+}
+
+
+
 function playGame(playermove) {
   const computerName = functionGame();
   let result = '';
@@ -65,8 +112,7 @@ function playGame(playermove) {
   showScore();
   
   document.querySelector('.js-result').innerHTML = result;
-  document.querySelector('.js-moves').innerHTML = `You <img src="${playermove}-emoji.png">
-    <img src="${computerName}-emoji.png"> Computer`;
-  
-  
+  document.querySelector('.js-moves').innerHTML = `You <img src="/image/${playermove}-emoji.png">
+    <img src="/image/${computerName}-emoji.png"> Computer`;
 };
+     
